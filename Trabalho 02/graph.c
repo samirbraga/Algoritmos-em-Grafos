@@ -127,14 +127,15 @@ void graph_add_edge(int a, int b) {
 }
 
 void graph_AVG() {
+    Graph *T;
     T = (Graph*)malloc(sizeof(Graph*));
     T->v = (Node**)malloc(sizeof(Node*) * n);
 
     Set *L[n];
 
     for (int i = 0; i < n - 1; i++) {
-        Set *C = (Set*)malloc(sizeof(Set*);
-        Node *N = (Node*)malloc(sizeof(Node*);
+        Set *C = (Set*)malloc(sizeof(Set*));
+        Node *N = (Node*)malloc(sizeof(Node*));
         N->val = i;
         N->next = NULL;
         C->size = 1;
@@ -145,7 +146,11 @@ void graph_AVG() {
     int m = 0;
 
     while (m < n - 1) {
-        
+        int edge[] = {1, 2};
+
+        if (L[edge[0]] != L[edge[1]]) {
+
+        }
     }
 }
 
@@ -155,7 +160,6 @@ int main(void) {
     for (int i = 0; i < 24; i++) {
         graph_add_edge(get_edge_el(edges, i, 0), get_edge_el(edges, i, 1));
     }
-
 
     for (int i = 0; i < n; i++) {
         printf("%d : ", i);
