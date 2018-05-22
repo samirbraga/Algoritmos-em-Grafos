@@ -75,6 +75,12 @@ typedef struct set {
 	Node* first;
 } Set;
 
+typedef struct edge {
+    double weight;
+    Node* from;
+    Node* to;
+} Edge;
+
 Graph *my_graph;
 
 Node* graph_new_node(int val);
@@ -124,6 +130,15 @@ void graph_add_neighbor(int a, int b) {
 void graph_add_edge(int a, int b) {
     graph_add_neighbor(a, b);
     graph_add_neighbor(b, a);
+}
+
+Edge* graph_create_edge(int i) {
+    Edge *edge = (Edge*)malloc(sizeof(Edge*));
+    edge->from = edges[i][0];
+    edge->to = edges[i][1];
+    edge->weight = w[i];
+
+    return edge;
 }
 
 void graph_AVG() {

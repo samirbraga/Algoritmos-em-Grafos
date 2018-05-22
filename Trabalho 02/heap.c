@@ -13,7 +13,7 @@ Heap *my_heap;
 
 // Assinatura dos métodos de manipulações da Heap
 
-void heap_construction(void);
+void heap_construction(void);.
 
 void heap_shiftup(int node_index);
 
