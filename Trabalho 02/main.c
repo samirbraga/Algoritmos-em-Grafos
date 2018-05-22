@@ -4,7 +4,6 @@
 
 int m = 20;
 
-
 int w[] = {
     25.8,
     53.6,
@@ -246,16 +245,16 @@ int get_edge_el(int arr[][2], int i, int j) {
 }
 
 void graph_add_neighbor(int a, int b) {
-    Node *n = my_graph->v[a - 1];
+    Node *n = my_graph->v[a];
 
     if (n != NULL) {
         Node *new_node;
-        new_node = graph_new_node(b - 1);
+        new_node = graph_new_node(b);
         new_node->next = n;
 
-        my_graph->v[a - 1] = new_node;
+        my_graph->v[a] = new_node;
     } else {
-        my_graph->v[a - 1] = graph_new_node(b - 1);
+        my_graph->v[a] = graph_new_node(b);
     }
 
 }
@@ -306,7 +305,7 @@ Graph* graph_AVG() {
         Edge *edge = heap_min(my_heap->data);
 
         if (L[edge->from] != L[edge->to]) {
-            graph_add_edge(edge->from, edge->to);
+            graph_add_edge(edge->from - 1, edge->to - 1);
             ++m;
 
             A = L[edge->from];
