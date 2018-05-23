@@ -109,7 +109,7 @@ void print_arr(double *arr);
 
 // Assinatura dos métodos de manipulações da Grafo
 
-void graph_construction(void);
+Graph* graph_construction(void);
 
 Node* graph_new_node(int val);
 
@@ -216,9 +216,8 @@ void print_arr(double *arr) {
 
 // Código referente ao Grafo
 
-Graph *my_graph;
-
-void graph_construction(void) {
+Graph* graph_construction(void) {
+    Graph *my_graph;
     my_graph = (Graph*)malloc(sizeof(Graph*));
     my_graph->v = (Node**)malloc(sizeof(Node*) * n);
 
@@ -227,6 +226,8 @@ void graph_construction(void) {
     }
 
     my_graph->n = n;
+
+    return my_graph;
 }
 
 Node* graph_new_node(int val) {
@@ -261,7 +262,7 @@ void graph_add_neighbor(Graph *g, int a, int b) {
 
 void graph_add_edge(Graph *g, int a, int b) {
     graph_add_neighbor(g, a, b);
-    // graph_add_neighbor(g, b, a);
+    graph_add_neighbor(g, b, a);
 }
 
 Edge* graph_create_edge(int i) {
@@ -276,13 +277,7 @@ Edge* graph_create_edge(int i) {
 Graph* graph_AVG() {
     heap_construction(); // Inicialização da Heap
 
-    Graph *T = (Graph*)malloc(sizeof(Graph*));
-    T->v = (Node**)malloc(sizeof(Node*) * n);
-    T->n = n;
-
-    for (int i = 0; i < n; i++) {
-        T->v[i] = NULL;
-    }
+    Graph *T = graph_construction();
 
     Set **L = (Set**)malloc(sizeof(Set*) * n);
 
@@ -308,7 +303,8 @@ Graph* graph_AVG() {
     Set *D;
 
     while (_m < (n - 1)) {
-        Edge *edge = heap_min();
+        Edge *edge = my_heap->data[0];
+
         heap_remove_min();
 
         if (L[edge->from] != L[edge->to]) {
@@ -334,6 +330,9 @@ Graph* graph_AVG() {
                 int v = P->val;
                 L[v] = D;
                 u = P;
+
+                printf("%d\n", P->val);
+
                 P = P->next;
             }
 
@@ -349,28 +348,28 @@ Graph* graph_AVG() {
 }
 
 int main(void) {
-    graph_construction(); // Inicialização do Grafo
+    Graph* g = graph_construction(); // Inicialização do Grafo
 
     for (int i = 0; i < m; i++) {
         int u = get_edge_el(edges, i, 0) - 1;
         int v = get_edge_el(edges, i, 1) - 1;
-        graph_add_edge(my_graph, u, v);
+        graph_add_edge(g, u, v);
     }
 
     Graph *T = graph_AVG();
 
-    for (int i = 0; i < n; i++) {
-        printf("%d : ", i);
+    // for (int i = 0; i < n; i++) {
+    //     printf("%d : ", i);
 
-        for (Node* node = my_graph->v[i]; node->next; node = node->next) {
-            printf("%d", node->val);
-            if (node->next->next != NULL) {
-                printf(", ");
-            }
-        }
+    //     for (Node* node = g->v[i]; node->next; node = node->next) {
+    //         printf("%d", node->val);
+    //         if (node->next->next != NULL) {
+    //             printf(", ");
+    //         }
+    //     }
 
-        printf("\n");
-    }
+    //     printf("\n");
+    // }
 
     return 0;
 }
